@@ -1,8 +1,19 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-# Our "Database" of fruits
+# --- CORS CONFIGURATION ---
+# This allows your frontend to access the API even if it's hosted on a different site
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],      # Allows all websites to access your API
+    allow_credentials=True,
+    allow_methods=["*"],      # Allows GET, POST, etc.
+    allow_headers=["*"],      # Allows all headers
+)
+
+# --- DATABASE ---
 fruits_db = [
     {"id": 1, "name": "Apple", "color": "Red", "emoji": "🍎"},
     {"id": 2, "name": "Banana", "color": "Yellow", "emoji": "🍌"},
@@ -57,6 +68,8 @@ fruits_db = [
     {"id": 51, "name": "Cactus Fruit", "color": "Pink", "emoji": "🌵"}
 ]
 
+# --- ROUTES ---
+
 @app.get("/")
 def home():
     return {"message": "Welcome to the Fruit API! Go to /fruits to see the list."}
@@ -70,5 +83,5 @@ def get_fruit(fruit_id: int):
     for fruit in fruits_db:
         if fruit["id"] == fruit_id:
             return fruit
-    # If not found, return a 404 error
+    # If not found, return a proper 404 error
     raise HTTPException(status_code=404, detail="Fruit not found")
