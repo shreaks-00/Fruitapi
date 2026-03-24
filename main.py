@@ -1,9 +1,4 @@
-from fastapi import FastAPI
-
-app = FastAPI()
-
-# Our "Database" of fruits
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 
 app = FastAPI()
 
@@ -66,32 +61,14 @@ fruits_db = [
 def home():
     return {"message": "Welcome to the Fruit API! Go to /fruits to see the list."}
 
-# Endpoint to get the whole list
 @app.get("/fruits")
 def get_all_fruits():
     return fruits_db
 
-# Endpoint to get just one fruit by its ID
 @app.get("/fruits/{fruit_id}")
 def get_fruit(fruit_id: int):
     for fruit in fruits_db:
         if fruit["id"] == fruit_id:
             return fruit
-    return {"error": "Fruit not found"}
-
-@app.get("/")
-def home():
-    return {"message": "Welcome to the Fruit API! Go to /fruits to see the list."}
-
-# Endpoint to get the whole list
-@app.get("/fruits")
-def get_all_fruits():
-    return fruits_db
-
-# Endpoint to get just one fruit by its ID
-@app.get("/fruits/{fruit_id}")
-def get_fruit(fruit_id: int):
-    for fruit in fruits_db:
-        if fruit["id"] == fruit_id:
-            return fruit
-    return {"error": "Fruit not found"}
+    # If not found, return a 404 error
+    raise HTTPException(status_code=404, detail="Fruit not found")
