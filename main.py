@@ -4,10 +4,12 @@ app = FastAPI()
 
 # Our "Database" of fruits
 fruits_db = [
-    {"id": 1, "name": "Apple", "color": "Red"},
-    {"id": 2, "name": "Banana", "color": "Yellow"},
-    {"id": 3, "name": "Blueberry", "color": "Blue"},
-    {"id": 4, "name": "Mango", "color": "Orange"}
+    {"id": 1, "name": "Apple", "color": "Red", "emoji": "🍎"},
+    {"id": 2, "name": "Banana", "color": "Yellow", "emoji": "🍌"},
+    {"id": 3, "name": "Blueberry", "color": "Blue", "emoji": "🫐"},
+    {"id": 4, "name": "Mango", "color": "Orange", "emoji": "🥭"},
+    {"id": 5, "name": "Strawberry", "color": "Red", "emoji": "🍓"},
+    {"id": 6, "name": "Pineapple", "color": "Yellow", "emoji": "🍍"}
 ]
 
 @app.get("/")
